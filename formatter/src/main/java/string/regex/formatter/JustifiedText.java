@@ -31,29 +31,28 @@ public class JustifiedText extends Formatter {
     	return result.toString();
     }
     
-    private String justifyLine(String text) {		
-		String result = text;
-		int existingSpaces = getNumberOfWhiteSpaces(text);
+    private String justifyLine(String textLine) {		
+		StringBuilder result = new StringBuilder();
+		int existingSpaces = getNumberOfWhiteSpaces(textLine);
 		
 		if (existingSpaces <= 0) {
-			return result;
+			return textLine;
 		}
 		
-    	int spaceNeeded = limit - text.replace("\n", "").length();
+    	int spaceNeeded = limit - textLine.replace("\n", "").length();
     	int div = spaceNeeded / existingSpaces;
     	int mod = spaceNeeded % existingSpaces;
     	
-    	String[] words = text.split(WHITESPACE_HEXADECIMAL);
+    	String[] words = textLine.split(WHITESPACE_HEXADECIMAL);
     	int wordsCount = words.length;
     	
     	if (spaceNeeded > 0) {
-    		result = "";
     		for (int i = 0; i < wordsCount - 1; i++) {
-    			result += leftPad(words[i], words[i].length() + div + 1 + (mod-- > 0 ? 1 : 0));
+    			result.append(leftPad(words[i], words[i].length() + div + 1 + (mod-- > 0 ? 1 : 0)));
         	}
-    		result += words[wordsCount - 1];
+    		result.append(words[wordsCount - 1]);
     	} 
-    	return result;
+    	return result.toString();
     }
 
     private String leftPad(String word, int length) {
